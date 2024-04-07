@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOURIK's RNG</title>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-image: linear-gradient(-45deg, #ff0000, #ff9900, #ffff00, #33ff00, #0099ff, #9900ff);
+        background-size: 400% 400%;
+        animation: rainbowBackground 10s ease infinite;
+        font-family: Arial, sans-serif;
+    }
+
+    @keyframes rainbowBackground {
+        0% {background-position: 0% 50%}
+        50% {background-position: 100% 50%}
+        100% {background-position: 0% 50%}
+    }
+
+    #gameContainer {
+        text-align: center;
+    }
+
+    #result {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    #rankImg {
+        width: 300px;
+        height: 300px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+    }
+
+    #rollButton {
+        font-size: 20px;
+        padding: 10px 20px;
+        background-color: #ffcc00;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    #description {
+        font-size: 18px;
+        font-weight: bold;
+    }
+</style>
+</head>
+<body>
+<div id="gameContainer">
+    <h1>SOURIK's RNG</h1>
+    <div id="result"></div>
+    <p id="description">Probability of the rolled rank:</p>
+    <p id="probability"></p>
+    <img id="rankImg" src="" alt="Rank Image">
+    <button id="rollButton" onclick="playGame()">Roll</button>
+</div>
+<script>
+    const ranks = [
+        { name: "NOOB", image: "https://i.pinimg.com/474x/7d/b3/16/7db31675cf3a7bee04975768ca9b0c2b.jpg", probability: 30 },
+        { name: "EZ", image: "https://cdn-0001.qstv.on.epicgames.com/CXXFScQsqHEayFeqWe/image/landscape_comp.jpeg", probability: 25 },
+        { name: "NORMAL", image: "https://static.wikia.nocookie.net/difficulty-rps/images/f/fb/Normal.png/revision/latest?cb=20240121113118", probability: 20 },
+        { name: "PRO", image: "https://i.pinimg.com/736x/c8/02/6c/c8026c433527d006049041cf7cf086a8.jpg", probability: 8 },
+        { name: "Gedagedigedagedo NUGGET", image: "https://fbi.cults3d.com/uploaders/28811877/illustration-file/120dd487-1a28-407c-9b14-3ca8181d50ef/ef1946c3789e869d054817f172e98569.jpg", probability: 6 },
+        { name: "SKIBDI TOILET", image: "https://upload.wikimedia.org/wikipedia/en/thumb/0/09/Skibidi_toilet_screenshot.webp/220px-Skibidi_toilet_screenshot.webp.png", probability: 3 },
+        { name: "HACKER", image: "https://preview.redd.it/jbcj0uqbihg41.jpg?width=1080&crop=smart&auto=webp&s=7a529d0abe43ab1f3594f59724b2d9072b6ab56b", probability: 1 },
+        { name: "DORAEMON", image: "https://i.imgflip.com/64egqr.jpg?a475416", probability: 0.5 },
+        { name: "GIGA NOGA", image: "https://i.kym-cdn.com/entries/icons/original/000/017/461/giganigga.jpg", probability: 0.25 },
+        { name: "GIGA CHAD", image: "https://dudewipes.com/cdn/shop/articles/gigachad.jpg?v=1667928905&width=2048", probability: 0.15 },
+        { name: "FINAL OHIO BOSS", image: "https://static.wikia.nocookie.net/joke-battles/images/d/d0/Ohio_Final_boss.jpg/revision/latest?cb=20230124020744", probability: 0.1 },
+        { name: "DEMI-GOD", image: "https://i.ytimg.com/vi/_fLy6fGw0Z4/maxresdefault.jpg", probability: 0.05 },
+        { name: "TRUE SAIYAN GOD", image: "https://m.media-amazon.com/images/I/816Etq5qEwL._AC_UF1000,1000_QL80_.jpg", probability: 0.025 },
+        { name: "BOB", image: "https://cdn.drawception.com/drawings/GBDQOAhdK3.png", probability: 0.01 }
+    ];
+
+    function rollDice() {
+        const roll = Math.random() * 100;
+        let cumulativeProbability = 0;
+
+        for (const rank of ranks) {
+            cumulativeProbability += rank.probability;
+            if (roll <= cumulativeProbability) {
+                return rank;
+            }
+        }
+    }
+
+    const resultDiv = document.getElementById('result');
+    const probabilityDiv = document.getElementById('probability');
+    const rankImg = document.getElementById('rankImg');
+
+    function playGame() {
+        const rank = rollDice();
+        resultDiv.textContent = `You rolled: ${rank.name}`;
+        probabilityDiv.textContent = `Probability: ${rank.probability}%`;
+        rankImg.src = rank.image;
+    }
+</script>
+</body>
+</html>
+
